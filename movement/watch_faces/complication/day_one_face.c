@@ -37,7 +37,10 @@ static void _day_one_face_update(day_one_state_t state) {
     watch_date_time date_time = watch_rtc_get_date_time();
     uint32_t julian_date = _day_one_face_juliandaynum(date_time.unit.year + WATCH_RTC_REFERENCE_YEAR, date_time.unit.month, date_time.unit.day);
     uint32_t julian_birthdate = _day_one_face_juliandaynum(state.birth_year, state.birth_month, state.birth_day);
-    sprintf(buf, "DA  %6lu", julian_date - julian_birthdate);
+    if (julian_date < julian_birthdate)
+        sprintf(buf, "DATO%-4luGO", julian_birthdate - julian_date);
+    else
+        sprintf(buf, "DA  %6lu", julian_date - julian_birthdate);
     watch_display_string(buf, 0);
 }
 
@@ -52,9 +55,9 @@ void day_one_face_setup(movement_settings_t *settings, uint8_t watch_face_index,
             // if birth date is totally blank, set a reasonable starting date. this works well for anyone under 63, but
             // you can keep pressing to go back to 1900; just pass the current year. also picked this date because if you
             // set it to 1959-01-02, it counts up from the launch of Luna-1, the first spacecraft to leave the well.
-            movement_birthdate.bit.year = 1959;
-            movement_birthdate.bit.month = 1;
-            movement_birthdate.bit.day = 1;
+            movement_birthdate.bit.year = 2023;
+            movement_birthdate.bit.month = 2;
+            movement_birthdate.bit.day = 24;
             watch_store_backup_data(movement_birthdate.reg, 2);
         }
     }
@@ -150,7 +153,7 @@ bool day_one_face_loop(movement_event_t event, movement_settings_t *settings, vo
                 switch (state->current_page) {
                     case 1:
                         state->birth_year = state->birth_year + 1;
-                        if (state->birth_year > state->current_year) state->birth_year = 1900;
+                        if (state->birth_year > state->current_year + 10) state->birth_year = 1980;
                         break;
                     case 2:
                         state->birth_month = (state->birth_month % 12) + 1;

@@ -287,6 +287,12 @@ void sunrise_sunset_face_setup(movement_settings_t *settings, uint8_t watch_face
     if (*context_ptr == NULL) {
         *context_ptr = malloc(sizeof(sunrise_sunset_state_t));
         memset(*context_ptr, 0, sizeof(sunrise_sunset_state_t));
+
+        // set to London
+        movement_location_t movement_location;
+        movement_location.bit.latitude = 5153;
+        movement_location.bit.longitude = -11;
+        watch_store_backup_data(movement_location.reg, 1);
     }
 }
 

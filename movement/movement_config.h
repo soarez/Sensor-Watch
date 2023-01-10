@@ -27,12 +27,32 @@
 
 #include "movement_faces.h"
 
+/*
+# install emscripten if necessary
+command -v emmake > /dev/null || brew install emscripten
+
+# build simulator
+cd movement/make
+make clean && emmake make
+python3 -m http.server 8000 --bind 127.0.0.1 -d build-sim
+open http://127.0.0.1/watch.html
+
+# build and install firmware
+cd movement/make
+make install
+*/
+
 const watch_face_t watch_faces[] = {
     simple_clock_face,
-    world_clock_face,
+    day_one_face,
     sunrise_sunset_face,
-    moon_phase_face,
+    totp_face,
+    /* counter_face, */
+    countdown_face,
     stopwatch_face,
+
+    pulsometer_face,
+    alarm_face,
     preferences_face,
     set_time_face,
 };
@@ -44,6 +64,6 @@ const watch_face_t watch_faces[] = {
  * excludes these faces from the normal rotation.
  * Usually it makes sense to set this to the preferences face.
  */
-#define MOVEMENT_SECONDARY_FACE_INDEX 0 // or (MOVEMENT_NUM_FACES - 2)
+#define MOVEMENT_SECONDARY_FACE_INDEX (MOVEMENT_NUM_FACES - 4)
 
 #endif // MOVEMENT_CONFIG_H_

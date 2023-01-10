@@ -8,6 +8,10 @@
 // Use https://cryptii.com/pipes/base32-to-hex to convert base32 to hex
 // Use https://totp.danhersam.com/ to generate test codes for verification
 
+#if __has_include("totp_face_secrets.h")
+#include "totp_face_secrets.h"
+#else
+
 static const uint8_t num_keys = 2;
 static uint8_t keys[] = {
     0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x21, 0xde, 0xad, 0xbe, 0xef, // 1 - JBSWY3DPEHPK3PXP
@@ -25,6 +29,8 @@ static const char labels[][2] = {
     { 'a', 'b' },
     { 'c', 'd' }
 };
+
+#endif
 
 void totp_face_setup(movement_settings_t *settings, uint8_t watch_face_index, void ** context_ptr) {
     (void) settings;
