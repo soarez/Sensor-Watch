@@ -57,7 +57,7 @@ void day_one_face_setup(movement_settings_t *settings, uint8_t watch_face_index,
             // set it to 1959-01-02, it counts up from the launch of Luna-1, the first spacecraft to leave the well.
             movement_birthdate.bit.year = 2023;
             movement_birthdate.bit.month = 2;
-            movement_birthdate.bit.day = 24;
+            movement_birthdate.bit.day = 17;
             watch_store_backup_data(movement_birthdate.reg, 2);
         }
     }

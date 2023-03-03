@@ -35,7 +35,7 @@ command -v emmake > /dev/null || brew install emscripten
 cd movement/make
 make clean && emmake make
 python3 -m http.server 8000 --bind 127.0.0.1 -d build-sim
-open http://127.0.0.1/watch.html
+open http://127.0.0.1:8000/watch.html
 
 # build and install firmware
 cd movement/make
